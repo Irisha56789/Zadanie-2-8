@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практическая работа с DOM</title>
+    <style>
+        p {
+            color: green;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="header">Заголовок</h1>
+    <p id="text">Это абзац текста.</p>
+    <ul id="list">
+        <li>Элемент списка 1</li>
+        <li>Элемент списка 2</li>
+        <li>Элемент списка 3</li>
+    </ul>
+    
+    <img id="image" src="https://via.placeholder.com/150" alt="Пример изображения">
+    
+    <a id="link" href="https://example.com">Старая ссылка</a>
+    
+    <button id="addButton">Добавить элемент списка</button>
+    <button id="removeButton">Удалить последний элемент списка</button>
+    <button id="changeColorButton">Изменить цвет абзаца</button>
+    <button id="toggleTextButton">Скрыть/показать абзац</button>
+    <button id="getDimensionsButton">Получить размеры абзаца</button>
+
+    <form id="myForm">
+        <input type="text" id="name" placeholder="Имя" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Отправить</button>
+    </form>
+    
+    <script>
+        // 1. Поиск элементов и изменение содержимого
+        const header = document.querySelector('#header');
+        header.innerText = 'Новый заголовок';
+
+        const listItems = document.querySelectorAll('#list li');
+        listItems.forEach((item, index) => {
+            item.innerText = `Элемент списка ${index + 1}`;
+        });
+
+        // 2. Редактирование атрибутов
+        const image = document.querySelector('#image');
+        image.setAttribute('src', 'https://via.placeholder.com/300');
+
+        const link = document.querySelector('#link');
+        link.innerHTML = 'Новая ссылка';
+        link.setAttribute('href', 'https://new-url.com');
+
+        // 3. Манипуляции с элементами
+        const list = document.querySelector('#list');
+
+        document.querySelector('#addButton').addEventListener('click', () => {
+            const newItem = document.createElement('li');
+            newItem.innerText = `Элемент списка ${list.children.length + 1}`;
+            list.appendChild(newItem);
+        });
+
+        document.querySelector('#removeButton').addEventListener('click', () => {
+            if (list.children.length > 0) {
+                list.removeChild(list.lastChild);
+            }
+
+        });
+
+// 4. Манипуляции со стилями CSS
+const paragraph = document.querySelector('#text');
+
+document.querySelector('#changeColorButton').addEventListener('click', () => {
+    paragraph.style.color = paragraph.style.color === 'blue' ? 'green' : 'blue';
+});
+
+document.querySelector('#toggleTextButton').addEventListener('click', () => {
+    paragraph.style.display = paragraph.style.display === 'none' ? 'block' : 'none';
+});
+
+// 5. Работа с геометрией элементов
+document.querySelector('#getDimensionsButton').addEventListener('click', () => {
+    const rect = paragraph.getBoundingClientRect();
+    console.log(`Ширина: ${rect.width}, Высота: ${rect.height}`);
+    alert(`Ширина: ${rect.width}, Высота: ${rect.height}`);
+});
+
+// Дополнительное задание: форма
+document.querySelector('#myForm').addEventListener('submit', (event) => {
+    event.preventDefault(); // Предотвращаем отправку формы
+
+    const name = document.querySelector('#name').value;
+    const email = document.querySelector('#email').value;
+
+    if (!name || !email) {
+        alert('Пожалуйста, заполните все поля!');
+    } else {
+        alert(`Имя: ${name}, Email: ${email}`);
+        // Здесь можно добавить код для отправки данных на сервер
+    }
+});
+</script>
+
+</body>
+</html>
